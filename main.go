@@ -124,8 +124,6 @@ func main() {
 		}))
 	}
 
-	fmt.Println(len(conf.Auth))
-
 	client, err := ssh.Dial("tcp", fmt.Sprintf("%s:%d", config.Host, config.Port), &conf)
 	if err != nil {
 		log.Fatalf("dial ssh: %s", err)
