@@ -76,9 +76,10 @@ func (c Config) GetIdentity() (ssh.Signer, error) {
 
 func main() {
 	var config Config
-	flag.StringVar(&config.User, "l", "", "login name")
 	flag.StringVar(&config.Host, "h", "127.0.0.1", "remote host")
 	flag.IntVar(&config.Port, "p", 22, "remote port")
+	flag.StringVar(&config.User, "l", "", "login name")
+	flag.StringVar(&config.Passwd, "passwd", "", "user password")
 	flag.StringVar(&config.IdentityFile, "i", "", "identity file ($HOME/.ssh/)")
 	flag.StringVar(&config.TotpSecret, "s", "", "totp secret")
 	flag.Parse()
@@ -122,6 +123,8 @@ func main() {
 			return []string{v}, nil
 		}))
 	}
+
+	fmt.Println(len(conf.Auth))
 
 	client, err := ssh.Dial("tcp", fmt.Sprintf("%s:%d", config.Host, config.Port), &conf)
 	if err != nil {
